@@ -1,0 +1,183 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 
+  ============================================
+  DESIGN SYSTEM - LOJA DE ROUPAS
+  ============================================
+  
+  COMO EDITAR CORES:
+  - Todas as cores estão em formato HSL (matiz, saturação%, luminosidade%)
+  - Para mudar uma cor, altere os números após os dois pontos
+  - Exemplo: 0 0% 100% = branco puro
+  
+  CORES PRINCIPAIS:
+  - --background: cor de fundo do site
+  - --foreground: cor do texto principal
+  - --primary: cor principal (botões, destaques)
+  - --accent: cor de destaque secundária
+*/
+
+@layer base {
+  :root {
+    /* Fundo e Texto */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 15%;
+
+    /* Cards e Popups */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 15%;
+
+    /* Cor Principal - Rose/Coral (pode mudar para sua cor preferida) */
+    --primary: 350 70% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Cor Secundária - Cinza claro */
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 15%;
+
+    /* Cores de Destaque */
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 30 60% 95%;
+    --accent-foreground: 30 40% 25%;
+
+    /* WhatsApp Verde */
+    --whatsapp: 142 70% 45%;
+    --whatsapp-foreground: 0 0% 100%;
+
+    /* Bordas e Inputs */
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 350 70% 55%;
+
+    /* Raio de Borda */
+    --radius: 0.5rem;
+
+    /* Sidebar (não usado neste projeto) */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 0 0% 8%;
+    --foreground: 0 0% 95%;
+    --card: 0 0% 12%;
+    --card-foreground: 0 0% 95%;
+    --popover: 0 0% 12%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 350 70% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 18%;
+    --secondary-foreground: 0 0% 95%;
+    --muted: 0 0% 18%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 30 40% 20%;
+    --accent-foreground: 30 60% 85%;
+    --whatsapp: 142 70% 50%;
+    --whatsapp-foreground: 0 0% 100%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 350 70% 60%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+}
+
+/* 
+  ============================================
+  ANIMAÇÕES E EFEITOS
+  ============================================
+*/
+
+@layer utilities {
+  /* Transição suave para hover em imagens */
+  .product-image-hover {
+    @apply transition-opacity duration-300 ease-in-out;
+  }
+
+  /* Container do produto com efeito hover */
+  .product-card {
+    @apply relative overflow-hidden rounded-lg bg-card shadow-sm transition-all duration-300;
+  }
+
+  .product-card:hover {
+    @apply shadow-lg;
+    transform: translateY(-4px);
+  }
+
+  /* Imagem frontal (visível por padrão) */
+  .product-image-front {
+    @apply absolute inset-0 w-full h-full object-cover opacity-100;
+  }
+
+  /* Imagem traseira (aparece no hover) */
+  .product-image-back {
+    @apply absolute inset-0 w-full h-full object-cover opacity-0;
+  }
+
+  .product-card:hover .product-image-front {
+    @apply opacity-0;
+  }
+
+  .product-card:hover .product-image-back {
+    @apply opacity-100;
+  }
+
+  /* Badge de tamanhos */
+  .size-badge {
+    @apply inline-flex items-center justify-center px-2 py-1 text-xs font-medium rounded border border-border bg-background text-foreground transition-colors cursor-pointer select-none;
+  }
+
+  .size-badge:hover {
+    @apply bg-primary/20 border-primary;
+  }
+
+  /* Estado selecionado - quando o tamanho foi escolhido */
+  .size-badge.selected {
+    @apply bg-primary text-primary-foreground border-primary;
+  }
+
+  /* Botão flutuante do WhatsApp */
+  .whatsapp-float {
+    @apply fixed bottom-6 right-6 z-50 flex items-center gap-2 px-5 py-3 rounded-full shadow-lg transition-all duration-300;
+    background-color: hsl(var(--whatsapp));
+    color: hsl(var(--whatsapp-foreground));
+  }
+
+  .whatsapp-float:hover {
+    @apply shadow-xl;
+    transform: scale(1.05);
+    background-color: hsl(142 70% 40%);
+  }
+}
